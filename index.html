@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inheritance AI Chatbot | C++ Unit 2</title>
+<style>
+:root{--navy:#14213d;--blue:#3157d5;--light:#f3f6ff;--ink:#202944;--muted:#68738b;--line:#e2e7f2}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:linear-gradient(135deg,#edf2ff,#f9fbff);color:var(--ink);min-height:100vh;display:grid;place-items:center;padding:18px}
+.app{width:min(980px,100%);height:min(780px,94vh);min-height:600px;background:#fff;border:1px solid var(--line);border-radius:24px;box-shadow:0 24px 70px #23386a1c;display:grid;grid-template-columns:280px 1fr;overflow:hidden}
+aside{background:var(--navy);color:#fff;padding:26px 20px;display:flex;flex-direction:column;gap:18px}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#7c9cff,#b8c7ff);display:grid;place-items:center;color:#14213d;font-size:23px;font-weight:900}.brand h1{font-size:17px;margin:0}.brand p{font-size:12px;color:#c5d0f4;margin:5px 0 0}
+.side-title{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:#aebce8;margin:10px 0 0}
+.topic{border:1px solid #ffffff25;background:#ffffff0b;color:#edf1ff;text-align:left;padding:11px 12px;border-radius:12px;cursor:pointer;font-size:13px;transition:.2s}.topic:hover{background:#ffffff1a;transform:translateX(2px)}
+.note{margin-top:auto;font-size:12px;line-height:1.6;color:#c5d0f4;border-top:1px solid #ffffff24;padding-top:15px}
+main{display:flex;flex-direction:column;min-width:0}.topbar{padding:20px 24px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:10px}.topbar h2{font-size:18px;margin:0}.status{font-size:12px;color:#21865a;background:#e9f9f0;padding:7px 10px;border-radius:99px;white-space:nowrap}.status:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:#20b26b;margin-right:6px}
+.messages{padding:24px;overflow:auto;flex:1;background:radial-gradient(ellipse at top right,#f1f5ff 0,transparent 45%),#fff}.welcome{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fbfcff;margin-bottom:18px}.welcome h3{margin:0 0 8px;font-size:21px}.welcome p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}.bubble{max-width:85%;padding:13px 15px;border-radius:16px;margin:12px 0;line-height:1.55;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.bot{background:#f1f4fb;border:1px solid #e7ebf5;border-top-left-radius:5px}.user{background:var(--blue);color:#fff;margin-left:auto;border-top-right-radius:5px}.bubble strong{font-weight:750}.quick{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 4px}.quick button{border:1px solid #d8e0f5;background:#fff;color:#3151b6;border-radius:99px;padding:8px 11px;font-size:12px;cursor:pointer}.quick button:hover{background:#edf2ff}
+.composer{padding:16px 20px;border-top:1px solid var(--line);background:#fff}.inputrow{display:flex;gap:10px}.inputrow input{flex:1;min-width:0;border:1px solid #dce2ef;border-radius:14px;padding:14px 15px;font-size:14px;outline:none}.inputrow input:focus{border-color:#6f8bf0;box-shadow:0 0 0 3px #3157d51a}.send{border:0;border-radius:14px;background:var(--blue);color:#fff;font-weight:700;padding:0 20px;cursor:pointer}.send:hover{background:#2445bb}.hint{font-size:11px;color:#8992a8;margin:9px 2px 0}
+@media(max-width:700px){body{padding:0}.app{height:100vh;min-height:0;border-radius:0;grid-template-columns:1fr}.app aside{display:none}.topbar{padding:16px}.messages{padding:16px}.bubble{max-width:94%}.welcome h3{font-size:19px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><div class="logo">AI</div><div><h1>Inheritance Buddy</h1><p>C++ • Unit 2 Study Assistant</p></div></div>
+  <div class="side-title">Explore topics</div>
+  <button class="topic" data-q="What is inheritance?">01 &nbsp; Inheritance basics</button>
+  <button class="topic" data-q="Explain access specifiers and inheritance modes">02 &nbsp; Access specifiers</button>
+  <button class="topic" data-q="Explain all five types of inheritance">03 &nbsp; Types of inheritance</button>
+  <button class="topic" data-q="Explain constructor and destructor order">04 &nbsp; Constructors & destructors</button>
+  <button class="topic" data-q="Explain function overriding with example">05 &nbsp; Function overriding</button>
+  <button class="topic" data-q="What is multiple inheritance ambiguity and how to solve it?">06 &nbsp; Ambiguity</button>
+  <button class="topic" data-q="Explain virtual base class and diamond problem">07 &nbsp; Virtual base class</button>
+  <button class="topic" data-q="What is an abstract class?">08 &nbsp; Abstract class</button>
+  <button class="topic" data-q="Give me a Unit 2 MCQ quiz">09 &nbsp; Practice MCQs</button>
+  <div class="note">Based on your uploaded <b>SY B.Tech AI & DS — OOP with C++, Unit 2: Inheritance</b> notes.<br>Study tip: ask for definitions, examples, code, outputs, or quick revision.</div>
+</aside>
+<main>
+  <div class="topbar"><h2>Ask your syllabus chatbot</h2><span class="status">Ready to help</span></div>
+  <div class="messages" id="messages" aria-live="polite">
+    <div class="welcome"><h3>Hi! 👋 Let's learn Inheritance.</h3><p>Ask me questions from C++ Unit 2 in simple language. I can explain concepts, show short code examples, help with exam answers, and quiz you.</p>
+      <div class="quick">
+        <button data-q="Explain inheritance in easy language">Explain inheritance</button>
+        <button data-q="List types of inheritance with examples">Types of inheritance</button>
+        <button data-q="Give me a 5-mark answer on virtual base class">5-mark answer</button>
+        <button data-q="Give me a Unit 2 MCQ quiz">Start a quiz</button>
+      </div>
+    </div>
+  </div>
+  <div class="composer"><div class="inputrow"><input id="question" placeholder="Type your question about Unit 2..." autocomplete="off"><button class="send" id="send">Send ➤</button></div><div class="hint">Tip: Try “show code for single inheritance” or “explain in 5-mark format”.</div></div>
+</main>
+</div>
+<script>
+const answers = [
+{keys:["what is inheritance","define inheritance","inheritance in easy","meaning of inheritance"],a:"Inheritance is an OOP feature in which a new class acquires accessible properties and functions from an existing class.\\n\\n• Existing class = base/parent class\\n• New class = derived/child class\\n• Benefit: code reuse, easier maintenance, and organized class hierarchies\\n\\nExample: Car is a Vehicle. Car can reuse Vehicle features such as start() and stop(), then add its own features."},
+{keys:["base class","derived class"],a:"A base class contains common features that other classes can reuse. A derived class inherits accessible members from the base class and can add its own features.\\n\\nExample:\\nclass Person { public: void introduce() {} };\\nclass Student : public Person { public: void study() {} };\\n\\nHere, Person is the base class and Student is the derived class."},
+{keys:["access specifier","private protected public","inheritance modes","public inheritance","private inheritance","protected inheritance"],a:"C++ has three access specifiers:\\n• public: accessible through an object and in derived classes.\\n• protected: accessible inside the class and derived classes, but not directly through an outside object.\\n• private: directly accessible only inside its own class (and permitted friends).\\n\\nInheritance modes:\\n• public inheritance: base public stays public; protected stays protected.\\n• protected inheritance: base public and protected become protected.\\n• private inheritance: base public and protected become private.\\nBase private members are not directly accessible in the derived class."},
+{keys:["types of inheritance","five types","list types","single inheritance","multilevel inheritance","hierarchical inheritance","hybrid inheritance","multiple inheritance"],a:"The five common types of inheritance are:\\n1. Single: one base → one derived (Person → Student).\\n2. Multilevel: chain of classes (Person → Employee → Manager).\\n3. Multiple: one derived class has multiple bases (Academic + Sports → Student).\\n4. Hierarchical: several derived classes share one base (Vehicle → Car and Bike).\\n5. Hybrid: combination of two or more types, often shown by a diamond hierarchy."},
+{keys:["constructor","destructor","execution order","order of constructor"],a:"When an object is created: the base-class constructor runs first, then the derived-class constructor.\\nWhen it is destroyed: the derived-class destructor runs first, then the base-class destructor.\\n\\nOutput order:\\nBase constructor\\nDerived constructor\\nDerived destructor\\nBase destructor\\n\\nRemember: construction goes base → derived; destruction goes derived → base."},
+{keys:["overriding","override","function overriding"],a:"Function overriding happens when a derived class provides its own version of a base-class function. For runtime polymorphism, declare the base function virtual and use override in the derived class.\\n\\nExample:\\nclass Vehicle { public: virtual void move() { cout << \\"Vehicle moves\\"; } };\\nclass Car : public Vehicle { public: void move() override { cout << \\"Car moves on roads\\"; } };\\n\\nCalling car.move() displays: Car moves on roads."},
+{keys:["ambiguity","multiple inheritance problem","scope resolution"],a:"Ambiguity can occur when two base classes have a member with the same name. The compiler cannot know which one you mean.\\n\\nExample fix:\\nstudent.Academic::display();\\nstudent.Sports::display();\\n\\nYou can also define a display() function in the derived class to select or combine both base-class functions."},
+{keys:["virtual base","diamond","diamond problem"],a:"The diamond problem occurs when two classes inherit from the same base class and another class inherits from both. Without virtual inheritance, the final object may contain two copies of the common base.\\n\\nSolution: use virtual inheritance, for example:\\nclass Student : virtual public Person {};\\nclass Employee : virtual public Person {};\\n\\nThis lets the most-derived object share one Person base subobject."},
+{keys:["abstract class","pure virtual"],a:"An abstract class is a class that cannot be instantiated directly because it has at least one pure virtual function. A pure virtual function uses = 0.\\n\\nExample:\\nclass Shape { public: virtual double area() const = 0; };\\n\\nA derived class such as Rectangle must implement area() to become a concrete class."},
+{keys:["friend class","friend"],a:"A friend class is given permission to access another class's private and protected members. It is declared inside the class that grants access, for example: friend class Auditor;\\n\\nFriendship is not automatically inherited, mutual, or transitive. Use it carefully because it bypasses normal encapsulation."},
+{keys:["nested class","nested"],a:"A nested class is declared inside another class. Example:\\nclass University { public: class Department { public: void display() {} }; };\\n\\nIt is useful when a class is strongly connected to its enclosing class. It can be referred to as University::Department."},
+{keys:["protected member","protected data"],a:"A protected member can be used inside its own class and in derived classes, but cannot normally be accessed directly through an object from outside. It is useful when derived classes need access to a base-class feature."},
+{keys:["class hierarchy","hierarchy"],a:"A class hierarchy organizes related classes from general to specialized. Example:\\nPerson\\n├── Student\\n│   ├── UndergraduateStudent\\n│   └── PostgraduateStudent\\n└── Employee\\n    ├── Faculty\\n    └── Administrator\\n\\nKeep a genuine “is-a” relationship. Use composition for “has-a”, such as Car has an Engine."},
+{keys:["mcq","quiz","test me"],a:"Quick Unit 2 quiz:\\n\\n1. Which constructor runs first when a derived object is created?\\nA) Derived  B) Base  C) Destructor\\n\\n2. Which keyword enables runtime polymorphic overriding in the base class?\\nA) friend  B) virtual  C) static\\n\\n3. Which inheritance type has one base and many derived classes?\\nA) Multiple  B) Hierarchical  C) Multilevel\\n\\nReply with your answers, e.g. “1B 2B 3B”, and I’ll check them."}
+];
+function answer(q){
+ const s=q.toLowerCase();
+ if(/^(hi|hello|hey|hii)\b/.test(s)) return "Hello! 😊 Ask me anything from C++ Unit 2: Inheritance. I can explain in easy language, give code, or prepare a 5-mark answer.";
+ if(s.includes("5-mark")||s.includes("5 mark")||s.includes("exam answer")) {
+   let found=answers.find(x=>x.keys.some(k=>s.includes(k)));
+   if(found) return "5-MARK ANSWER\\n\\n"+found.a+"\\n\\nFor exams, write: definition → key points → example/diagram → conclusion.";
+ }
+ const found=answers.find(x=>x.keys.some(k=>s.includes(k)));
+ if(found) return found.a;
+ if(s.includes("code")||s.includes("program")) return "Here is a simple single-inheritance example:\\n\\n#include <iostream>\\nusing namespace std;\\nclass Person { public: void introduce(){ cout << \\"I am a person\\\\n\\"; } };\\nclass Student : public Person { public: void study(){ cout << \\"Student is studying\\\\n\\"; } };\\nint main(){ Student s; s.introduce(); s.study(); return 0; }\\n\\nOutput:\\nI am a person\\nStudent is studying\\n\\nPerson is the base class; Student inherits introduce() and adds study().";
+ if(s.includes("syllabus")||s.includes("topics")) return "Your uploaded Unit 2 syllabus covers: base and derived classes, protected members, base-derived relationship, constructors/destructors, overriding, class hierarchies, public/private inheritance, five inheritance types, ambiguity in multiple inheritance, virtual base class, abstract class, friend class, and nested class.";
+ return "I’m a syllabus-focused chatbot for C++ Unit 2: Inheritance. Try asking: “What is inheritance?”, “Explain all five types”, “Constructor order”, “Virtual base class”, “Abstract class”, or “Give me code for single inheritance”. For questions outside the uploaded Unit 2 notes, I may not have enough information yet.";
+}
+const messages=document.getElementById("messages"),input=document.getElementById("question");
+function add(text,who){const d=document.createElement("div");d.className="bubble "+who;d.textContent=text;messages.appendChild(d);messages.scrollTop=messages.scrollHeight;}
+function send(){const q=input.value.trim();if(!q)return;add(q,"user");input.value="";setTimeout(()=>add(answer(q),"bot"),180);}
+document.getElementById("send").addEventListener("click",send);
+input.addEventListener("keydown",e=>{if(e.key==="Enter")send();});
+document.querySelectorAll("[data-q]").forEach(b=>b.addEventListener("click",()=>{input.value=b.dataset.q;send();}));
+</script>
+</body>
+</html>
